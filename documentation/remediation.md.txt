@@ -1,0 +1,130 @@
+
+---
+
+# 2. `remediation.md`
+
+```markdown
+# IAM Security Remediation
+
+## Finding
+
+**IAM-002 — Excessive IAM Privilege**
+
+---
+
+## Issue
+
+The `cloudsec-analyst` identity was intended to perform read-only IAM activities.
+
+A temporary policy was attached to the `CloudSecurity-Analysts` group that granted:
+
+```text
+iam:CreateUser
+
+
+This permission exceeded the intended responsibilities of the analyst role.
+
+Security Risk
+
+Excessive permissions increase the potential impact of compromised credentials.
+
+An identity capable of creating IAM users may become a security risk when combined with other permissions that allow privilege assignment or administrative activity.
+
+Therefore, unnecessary IAM permissions should be removed.
+
+Root Cause
+
+The excessive permission originated from the intentionally attached policy:
+
+LAB-EXCESSIVE-IAM-CreateUser
+
+Policy effect:
+
+Allow
+
+Action:
+
+iam:CreateUser
+
+Resource:
+
+*
+Remediation Procedure
+Step 1 — Identify the excessive policy
+
+The following policy was identified as the source of the unnecessary permission:
+
+LAB-EXCESSIVE-IAM-CreateUser
+Step 2 — Remove the policy
+
+The policy was removed from:
+
+CloudSecurity-Analysts
+Step 3 — Verify remaining permissions
+
+The group retained only the intended read-only IAM policy:
+
+CloudSecurityAnalyst-ReadOnly-IAM
+Step 4 — Retest
+
+The IAM Policy Simulator was used to test:
+
+iam:CreateUser
+Result
+DENIED
+Before Remediation
+cloudsec-analyst
+       |
+       v
+CloudSecurity-Analysts
+       |
+       +-- IAM Read Only
+       |
+       +-- CreateUser  <-- Excessive Permission
+After Remediation
+cloudsec-analyst
+       |
+       v
+CloudSecurity-Analysts
+       |
+       +-- IAM Read Only
+Validation
+
+The remediation was considered successful because:
+
+iam:ListUsers
+       |
+       v
+    ALLOWED
+
+iam:CreateUser
+       |
+       v
+    DENIED
+
+The final configuration matches the intended least-privilege model.
+
+Security Principle
+
+Principle of Least Privilege
+
+Users should receive only the permissions necessary to perform their assigned responsibilities.
+
+Final Status
+
+Remediated
+
+Evidence
+
+Relevant evidence is stored in:
+
+../screenshots/
+
+Important evidence includes:
+
+Excessive policy review
+Excessive policy attachment
+CreateUser allowed during misconfiguration
+Excessive policy removal
+CreateUser denied after remediation
+

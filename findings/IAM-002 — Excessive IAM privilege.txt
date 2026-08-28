@@ -1,0 +1,25 @@
+IAM-002 — Excessive IAM privilege
+
+Affected identity:
+
+cloudsec-analyst
+
+Expected access:
+
+Read-only IAM
+
+Actual access:
+
+Can create IAM users
+
+Problem:
+
+The analyst's permissions exceed their business requirement.
+
+Risk
+
+An identity capable of creating IAM users could potentially be abused to establish additional identities or persistence, especially if additional permissions are granted elsewhere.
+
+So the issue is:
+
+Privilege exceeds business requirement → violation of least privilege.
