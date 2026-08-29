@@ -1,0 +1,154 @@
+# S3 Security Remediation
+
+## 1. Objective
+
+Remediate the intentionally introduced S3 public-access
+misconfiguration and restore the bucket to a secure baseline.
+
+---
+
+## 2. Identified Issue
+
+The lab temporarily introduced an insecure S3 configuration
+to simulate a cloud security incident.
+
+The simulated configuration included:
+
+- Public access configuration
+- A bucket policy using `Principal: "*"`
+- `s3:GetObject` permission
+
+No sensitive or production data was used.
+
+---
+
+## 3. Remediation Actions
+
+### Step 1 — Remove Public Bucket Policy
+
+The intentionally created public bucket policy was removed.
+
+This prevents the test policy from continuing to grant
+public object access.
+
+### Step 2 — Enable S3 Block Public Access
+
+All four S3 Block Public Access controls were enabled:
+
+- Block public ACLs
+- Ignore public ACLs
+- Block public bucket policies
+- Restrict public bucket access
+
+### Step 3 — Verify Encryption
+
+S3 server-side encryption was verified to remain enabled.
+
+### Step 4 — Verify Versioning
+
+S3 versioning was verified to remain enabled.
+
+### Step 5 — Validate with IAM Access Analyzer
+
+IAM Access Analyzer was checked after remediation to verify
+the resulting access configuration.
+
+### Step 6 — Verify Monitoring
+
+CloudTrail and EventBridge monitoring remained enabled so that
+future security-sensitive API activity can be investigated.
+
+---
+
+## 4. Before vs After
+
+| Security Control | Before | After |
+|---|---|---|
+| Public bucket policy | Intentionally configured | Removed |
+| Block Public Access | Weakened for lab | Enabled |
+| Encryption | Enabled | Enabled |
+| Versioning | Enabled | Enabled |
+| Access Analyzer | Finding investigated | Re-validated |
+| CloudTrail | Enabled | Enabled |
+| EventBridge | Detection configured | Enabled |
+| CloudWatch Logs | Detection evidence | Receiving events |
+
+---
+
+## 5. Validation
+
+The final S3 configuration was reviewed after remediation.
+
+The security state was confirmed through:
+
+- S3 Permissions
+- Block Public Access settings
+- IAM Access Analyzer
+- CloudTrail event history
+- EventBridge detection rule
+- CloudWatch Logs
+
+---
+
+## 6. Evidence
+
+The remediation is supported by the following screenshots:
+
+- `40-s3-policy-remediated.png`
+- `41-s3-block-public-access-enabled.png`
+- `42-access-analyzer-remediation.png`
+- `43-s3-final-secure-state.png`
+
+---
+
+## 7. Security Outcome
+
+The intentionally introduced public-access configuration
+was removed and the S3 bucket was restored to a secure state.
+
+The monitoring pipeline remains available for detecting
+future security-sensitive activity.
+
+---
+
+## 8. Lessons Learned
+
+### Preventive controls
+
+Security controls such as S3 Block Public Access should be
+enabled by default wherever appropriate.
+
+### Detective controls
+
+Preventive controls alone are not sufficient. CloudTrail,
+EventBridge, CloudWatch Logs, and IAM Access Analyzer provide
+visibility into security-relevant activity.
+
+### Investigation
+
+CloudTrail provides valuable information such as:
+
+- Who performed an action
+- What API operation occurred
+- When it occurred
+- Source IP
+- AWS Region
+- Affected resource
+- Success or failure
+
+### Response
+
+A cloud security analyst should:
+
+```text
+Detect
+  ↓
+Investigate
+  ↓
+Identify root cause
+  ↓
+Remediate
+  ↓
+Validate
+  ↓
+Document

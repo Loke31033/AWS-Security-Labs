@@ -1,0 +1,50 @@
+# CloudTrail S3 Activity Investigation
+
+## Objective
+
+Investigate an S3 management event using AWS CloudTrail Event History.
+
+## Event Investigated
+
+- Event name: DeleteBucketPolicy
+- Event source: s3.amazonaws.com
+- Event time: [YOUR EVENT TIME]
+- User identity: [YOUR IDENTITY TYPE/PRINCIPAL]
+- Source IP: [REDACTED IN PUBLIC DOCUMENTATION]
+- AWS Region: [YOUR REGION]
+- Resource: [YOUR S3 BUCKET]
+
+## Investigation
+
+### Who?
+
+The CloudTrail `userIdentity` field identifies the principal that performed the API operation.
+
+### What?
+
+The `eventName` was `DeleteBucketPolicy`.
+
+This operation removes a bucket policy from an S3 bucket.
+
+### When?
+
+The operation occurred at the timestamp recorded in the `eventTime` field.
+
+### Where?
+
+The event contains the source IP address and AWS Region associated with the request.
+
+### Result
+
+The event was reviewed for `errorCode` and `errorMessage` to determine whether the operation succeeded or failed.
+
+## Security Relevance
+
+Bucket-policy changes are security-sensitive because bucket policies can control access to S3 resources.
+
+CloudTrail provides an audit trail that allows security analysts to investigate these API operations.
+
+## Evidence
+
+- `25-cloudtrail-s3-events.png`
+- `26-cloudtrail-s3-event-details.png`

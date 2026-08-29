@@ -1,0 +1,33 @@
+Finding: S3-001
+
+Title:
+
+S3 Bucket Allows Public Object Read Access
+
+Severity:
+
+High
+
+Status:
+
+Open / Unresolved
+
+Affected Resource:
+
+Your S3 bucket
+
+Access Granted:
+
+s3:GetObject
+
+Principal:
+
+*
+
+Access Mechanism:
+
+S3 bucket policy
+
+Security Control Bypassed:
+
+S3 Block Public Access was intentionally disabled for the lab.

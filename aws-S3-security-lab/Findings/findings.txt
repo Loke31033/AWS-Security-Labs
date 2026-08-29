@@ -1,0 +1,22 @@
+# S3-001 — Unintended Public Access to S3 Bucket
+
+## Severity
+
+High
+
+## Status
+
+Remediated
+
+## Affected Resource
+
+AWS S3 security lab bucket
+
+## Description
+
+A controlled security misconfiguration was introduced in the S3 lab environment.
+
+S3 Block Public Access was temporarily disabled and a bucket policy was configured with a wildcard principal:
+
+```text
+Principal: *

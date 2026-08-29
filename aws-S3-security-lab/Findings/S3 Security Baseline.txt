@@ -1,0 +1,20 @@
+S3 Security Baseline
+====================
+
+Block Public Access:
+Enabled
+
+Object Ownership:
+Bucket owner enforced
+
+ACLs:
+Disabled
+
+Bucket Policy:
+None
+
+Encryption:
+SSE-S3
+
+Versioning:
+Enabled

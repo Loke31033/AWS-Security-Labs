@@ -1,0 +1,21 @@
+AWS S3 Security Lab
+===================
+
+This is a controlled test object.
+
+Purpose:
+To demonstrate S3 object storage,
+access control, encryption,
+and security monitoring.
+
+Classification: LAB-TEST-DATAAWS S3 Security Lab
+===================
+
+Version: 2
+
+This is a controlled test object.
+
+Security controls:
+- Block Public Access
+- Encryption
+- Versioning
