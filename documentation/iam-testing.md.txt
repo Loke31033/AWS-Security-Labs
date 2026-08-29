@@ -1,0 +1,99 @@
+# IAM Permission Testing
+
+## Objective
+
+The objective of this testing was to verify that the `cloudsec-analyst` IAM identity received only the permissions required for its intended role.
+
+The IAM Policy Simulator was used to validate allowed and denied IAM actions without executing the actual AWS API operations.
+
+---
+
+## Test Environment
+
+### IAM User
+
+`cloudsec-analyst`
+
+### IAM Group
+
+`CloudSecurity-Analysts`
+
+### Intended Policy
+
+`CloudSecurityAnalyst-ReadOnly-IAM`
+
+### Intended Permissions
+
+```text
+iam:Get*
+iam:List*
+
+Test 1 — IAM ListUsers
+Action
+iam:ListUsers
+Expected Result
+ALLOWED
+Actual Result
+ALLOWED
+Reason
+
+The action matches the policy permission:
+
+iam:List*
+Security Conclusion
+
+The analyst can retrieve IAM user information as required for read-only security investigation.
+
+Test 2 — IAM CreateUser
+Action
+iam:CreateUser
+Initial Expected Result
+DENIED
+Actual Result
+DENIED
+
+The read-only policy does not grant the iam:CreateUser permission.
+
+Controlled Misconfiguration
+
+A temporary policy named:
+
+LAB-EXCESSIVE-IAM-CreateUser
+
+was attached to the CloudSecurity-Analysts group.
+
+The policy granted:
+
+iam:CreateUser
+
+This was intentionally introduced to simulate an excessive-permission scenario.
+
+Test After Misconfiguration
+Action
+iam:CreateUser
+Result
+ALLOWED
+
+This demonstrated that the additional policy changed the effective permissions of the analyst identity.
+
+Test After Remediation
+
+The excessive policy was removed.
+
+The same action was tested again:
+
+iam:CreateUser
+
+Final Result
+DENIED
+Test Summary
+IAM Action	Secure State	Misconfigured State	Final State
+iam:ListUsers	Allowed	Allowed	Allowed
+iam:CreateUser	Denied	Allowed	Denied
+Conclusion
+
+The testing confirmed that IAM policies directly affect the effective permissions of an identity.
+
+The controlled misconfiguration demonstrated how excessive permissions can expand an identity's capabilities.
+
+The final retest confirmed successful remediation.

@@ -1,0 +1,13 @@
+Finding ID: IAM-001
+
+Title: IAM analyst restricted to read-only IAM operations
+
+Risk: Low
+
+Observation: The cloudsec-analyst identity can enumerate IAM information but cannot create or modify IAM identities.
+
+Control: Least privilege
+
+Validation: Policy Simulator
+
+Result: Expected permissions were allowed and unauthorized administrative actions were denied.
