@@ -1,0 +1,20 @@
+# Remediation
+
+## Actions
+
+1. Reviewed the EC2 Security Group inbound rules.
+2. Confirmed that TCP port 23 was not permitted.
+3. Retained SSH access on TCP port 22 for legitimate administration.
+4. Avoided exposing unnecessary network services.
+5. Retested both SSH and Telnet connectivity.
+
+## Expected Security State
+
+| Service | Port | Result |
+|---|---:|---|
+| SSH | 22/TCP | ACCEPT |
+| Telnet | 23/TCP | REJECT |
+
+## Security Principle
+
+The configuration follows the principle of least privilege by allowing only required administrative access and blocking unnecessary services.

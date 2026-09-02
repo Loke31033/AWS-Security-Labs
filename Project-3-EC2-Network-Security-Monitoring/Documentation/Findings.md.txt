@@ -1,0 +1,33 @@
+# Security Findings
+
+## Finding: Unauthorized Telnet Traffic
+
+### Severity
+Medium
+
+### Description
+
+A network connection attempt to TCP port 23 (Telnet) was detected against the EC2 environment.
+
+### Risk
+
+Telnet is an insecure legacy protocol because it does not provide encrypted communication. Unnecessary exposure of Telnet can increase the attack surface of an EC2 workload.
+
+### Detection
+
+The activity was detected through:
+
+- VPC Flow Logs
+- CloudWatch Logs
+- CloudWatch Metric Filter
+- CloudWatch Metric
+- CloudWatch Alarm
+- SNS notification
+
+### Result
+
+The traffic was rejected by the configured security controls.
+
+### Security Impact
+
+The attempted connection did not result in successful Telnet access.

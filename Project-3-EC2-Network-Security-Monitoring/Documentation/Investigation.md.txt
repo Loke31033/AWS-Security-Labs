@@ -1,0 +1,28 @@
+# Investigation
+
+## Alert
+
+CloudWatch generated an alert for rejected network traffic.
+
+## Investigation Process
+
+1. Reviewed CloudWatch Alarm.
+2. Confirmed the `RejectedTrafficCount` metric entered the alarm state.
+3. Investigated the underlying VPC Flow Logs using CloudWatch Logs Insights.
+4. Identified a rejected TCP connection to destination port 23.
+5. Correlated the rejected traffic with the EC2 Security Group configuration.
+6. Confirmed that Telnet was not an authorized service.
+
+## Evidence
+
+The VPC Flow Log showed:
+
+- Protocol: TCP
+- Destination Port: 23
+- Action: REJECT
+
+## Analyst Conclusion
+
+The connection attempt targeted an unnecessary/unapproved Telnet service. The security controls correctly rejected the traffic.
+
+No evidence of successful Telnet access was identified.
